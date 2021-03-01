@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LibraryAPI.Data;
+using LibraryAPI.Data.Interfaces;
+using LibraryAPI.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace LibraryAPI
 {
@@ -25,6 +29,11 @@ namespace LibraryAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.Configure<CatalogDBSettings>(Configuration.GetSection(nameof(CatalogDBSettings)));
+            services.AddSingleton<ICatalogDBSettings>(sp => 
+            sp.GetRequiredService<IOptions<CatalogDBSettings>>().Value);
+
+            services.AddTransient<ILibraryDBContext, LibraryContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
