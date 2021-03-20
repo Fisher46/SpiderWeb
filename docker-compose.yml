@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  libraryapi:
+    image: ${DOCKER_REGISTRY-}libraryapi
+    build:
+      context: .
+      dockerfile: src/Library/LibraryAPI/Dockerfile

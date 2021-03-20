@@ -13,7 +13,7 @@ namespace LibraryAPI.Data
         {
             if (movieCollection.Find(m => true).Any())
             {
-                movieCollection.InsertManyAsync(GetPreConfiguredData());
+            movieCollection.InsertManyAsync(GetPreConfiguredData());
             }
         }
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LibraryAPI.Settings
 {
-    public interface ICatalogDBSettings
+    public interface ILibraryDBSettings
     {
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }

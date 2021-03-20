@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace LibraryAPI.Repositories
 {
-    public class MovieRepositoryL : IMovieRepositroy
+    public class MovieRepository : IMovieRepositroy
     {
 
         public readonly ILibraryDBContext _context;
 
-        public MovieRepositoryL(ILibraryDBContext context)
+        public MovieRepository(ILibraryDBContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -25,7 +25,7 @@ namespace LibraryAPI.Repositories
             await _context.Movies.InsertOneAsync(movie);
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(string id)
         {
             FilterDefinition<Movie> filter = Builders<Movie>.Filter.Eq(m => m.Id, id);
             DeleteResult deleteResult = await _context.Movies.DeleteOneAsync(filter);
@@ -43,20 +43,20 @@ namespace LibraryAPI.Repositories
         }
 
 
-        public async Task<Movie> GetMovieById(int id)
+        public async Task<Movie> GetMovieById(string id)
         {
             return await _context.Movies.Find(m => m.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesByName(string name)
         {
-            FilterDefinition<Movie> filter = Builders<Movie>.Filter.ElemMatch(m => m.Name, name);
+            FilterDefinition<Movie> filter = Builders<Movie>.Filter.Eq(m => m.Name, name);
             return await _context.Movies.Find(filter).ToListAsync();
         }
 
         public async Task<IEnumerable<Movie>> GetMoviesByCategory(string categoryName)
         {
-            FilterDefinition<Movie> filter = Builders<Movie>.Filter.ElemMatch(m => m.Category, categoryName);
+            FilterDefinition<Movie> filter = Builders<Movie>.Filter.Eq(m=>m.Category, categoryName);
             return await _context.Movies.Find(filter).ToListAsync();
         }
 
