@@ -1,6 +1,10 @@
 version: '3.4'
 
 services:
+  librarydb:
+    image: mongo
+
+   
   libraryapi:
     image: ${DOCKER_REGISTRY-}libraryapi
     build:
